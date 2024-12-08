@@ -1,0 +1,34 @@
+[general]
+live_config_reload = true
+
+[terminal]
+[terminal.shell]
+program = "/opt/homebrew/bin/zsh"
+
+# FONT
+[font]
+normal = { family = "Hack Nerd Font", style = "Regular" }
+bold = { family = "Hack Nerd Font", style = "Bold" }
+italic = { family = "Hack Nerd Font", style = "Italic" }
+bold_italic = { family = "Hack Nerd Font", style = "Bold Italic" }
+size = 14.0
+offset = { x = 0, y = 0}
+glyph_offset = { x = 0, y = 0}
+
+[colors.primary]
+background = '#00001A'
+
+# KEYBOARD
+[keyboard]
+bindings = [
+  {key = "V", mods = "Command", action = "Paste"}, # Pastes clipboard content
+  {key = "C", mods = "Command", action = "Copy"}, # Copies selection to clipboard
+
+  {key = "Up", mods = "Alt", chars = "\u001b[1;5A"}, # Sends Alt + Up sequence
+  {key = "Down", mods = "Alt", chars = "\u001b[1;5B"}, # Sends Alt + Down sequence
+  {key = "Left", mods = "Alt", chars = "\u001bb"}, # Sends Alt + Left sequence
+  {key = "Right", mods = "Alt", chars = "\u001bf"}, # Sends Alt + Right sequence
+
+  {key = "Left", mods = "Command", chars = "\u001bOH", mode = "AppCursor"}, # Moves to the beginning (Home)
+  {key = "Right", mods = "Command", chars = "\u001bOF", mode = "AppCursor"}, # Moves to the end (End)
+]

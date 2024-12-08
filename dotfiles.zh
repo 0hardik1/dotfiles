@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Save current directory
+DOTFILES_DIR="$PWD"
+
+# Check if the 'dotfiles' directory exists
+if [[ ! -d "$DOTFILES_DIR" ]]; then
+  echo "Error: The directory $DOTFILES_DIR does not exist. Please create the 'dotfiles' directory first."
+  exit 1
+fi
+
+# Function to copy dotfiles from the system to the 'dotfiles' directory
+copy_dotfiles() {
+  echo "Copying dotfiles to the repository..."
+
+  cp ~/.config/alacritty/alacritty.toml $DOTFILES_DIR/alacritty.yml
+  cp ~/.zshrc $DOTFILES_DIR/.zshrc
+
+  echo "Dotfiles copied successfully!"
+}
+
+# Function to save dotfiles from the repository to the system
+save_dotfiles() {
+  echo "Saving dotfiles from the repository..."
+
+  cp $DOTFILES_DIR/alacritty.yml ~/.config/alacritty/alacritty.yml
+  cp $DOTFILES_DIR/.zshrc ~/.zshrc
+
+  echo "Dotfiles saved successfully!"
+}
+
+# Main logic to determine the action based on the argument
+case "$1" in
+  "copy")
+    copy_dotfiles
+    ;;
+  "save")
+    save_dotfiles
+    ;;
+  *)
+    echo "Usage: $0 {copy|save}"
+    exit 1
+    ;;
+esac
