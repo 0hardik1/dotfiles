@@ -1,44 +1,241 @@
 #!/bin/bash
 
+# ===============================================
+# 🗂️ DOTFILES MANAGEMENT SCRIPT
+# ===============================================
+
+# Script version
+VERSION="2.0.0"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+NC='\033[0m' # No Color
+
 # Save current directory
 DOTFILES_DIR="$PWD"
 
-# Check if the 'dotfiles' directory exists
-if [[ ! -d "$DOTFILES_DIR" ]]; then
-  echo "Error: The directory $DOTFILES_DIR does not exist. Please create the 'dotfiles' directory first."
-  exit 1
-fi
+# Function to print colored output
+print_status() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
 
-# Function to copy dotfiles from the system to the 'dotfiles' directory
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+print_header() {
+    echo -e "${PURPLE}[DOTFILES]${NC} $1"
+}
+
+# Function to show usage
+show_usage() {
+    echo "🗂️ Dotfiles Management Script v$VERSION"
+    echo ""
+    echo "Usage: $0 [OPTION]"
+    echo ""
+    echo "Options:"
+    echo "  copy       Copy dotfiles from system to repository"
+    echo "  save       Save dotfiles from repository to system (with backup)"
+    echo "  sync       Sync dotfiles (copy from system to repo)"
+    echo "  status     Show status of dotfiles"
+    echo "  help       Show this help message"
+    echo ""
+    echo "Examples:"
+    echo "  $0 copy     # Copy current system configs to repo"
+    echo "  $0 save     # Install repo configs to system"
+    echo "  $0 sync     # Update repo with current system configs"
+    echo "  $0 status   # Check differences between repo and system"
+    echo ""
+}
+
+# Function to check if dotfiles directory exists
+check_dotfiles_dir() {
+    if [[ ! -d "$DOTFILES_DIR" ]]; then
+        print_error "The directory $DOTFILES_DIR does not exist."
+        print_status "Please run this script from your dotfiles directory."
+        exit 1
+    fi
+}
+
+# Function to copy dotfiles from the system to the repository
 copy_dotfiles() {
-  echo "Copying dotfiles to the repository..."
-
-  cp ~/.config/alacritty/alacritty.toml $DOTFILES_DIR/alacritty.yml
-  cp ~/.zshrc $DOTFILES_DIR/.zshrc
-
-  echo "Dotfiles copied successfully!"
+    print_header "Copying dotfiles from system to repository..."
+    
+    check_dotfiles_dir
+    
+    # Copy .zshrc
+    if [ -f "$HOME/.zshrc" ]; then
+        cp "$HOME/.zshrc" "$DOTFILES_DIR/.zshrc"
+        print_success "Copied ~/.zshrc"
+    else
+        print_warning "~/.zshrc not found"
+    fi
+    
+    # Copy Alacritty config
+    if [ -f "$HOME/.config/alacritty/alacritty.yml" ]; then
+        cp "$HOME/.config/alacritty/alacritty.yml" "$DOTFILES_DIR/alacritty.yml"
+        print_success "Copied ~/.config/alacritty/alacritty.yml"
+    else
+        print_warning "~/.config/alacritty/alacritty.yml not found"
+    fi
+    
+    # Copy Powerlevel10k config if it exists
+    if [ -f "$HOME/.p10k.zsh" ]; then
+        cp "$HOME/.p10k.zsh" "$DOTFILES_DIR/.p10k.zsh"
+        print_success "Copied ~/.p10k.zsh"
+    else
+        print_status "~/.p10k.zsh not found (will be created after p10k configure)"
+    fi
+    
+    print_success "Dotfiles copied to repository successfully!"
 }
 
 # Function to save dotfiles from the repository to the system
 save_dotfiles() {
-  echo "Saving dotfiles from the repository..."
+    print_header "Installing dotfiles from repository to system..."
+    
+    check_dotfiles_dir
+    
+    # Create backup using the setup script if it exists
+    if [ -f "$DOTFILES_DIR/setup.sh" ]; then
+        print_status "Creating backup using setup script..."
+        "$DOTFILES_DIR/setup.sh" backup
+    else
+        print_warning "setup.sh not found, creating manual backup..."
+        backup_dir="$HOME/.dotfiles_manual_backup_$(date +%Y%m%d_%H%M%S)"
+        mkdir -p "$backup_dir"
+        
+        [ -f "$HOME/.zshrc" ] && cp "$HOME/.zshrc" "$backup_dir/.zshrc"
+        [ -f "$HOME/.config/alacritty/alacritty.yml" ] && cp "$HOME/.config/alacritty/alacritty.yml" "$backup_dir/alacritty.yml"
+        [ -f "$HOME/.p10k.zsh" ] && cp "$HOME/.p10k.zsh" "$backup_dir/.p10k.zsh"
+        
+        print_status "Manual backup created at: $backup_dir"
+    fi
+    
+    # Install .zshrc
+    if [ -f "$DOTFILES_DIR/.zshrc" ]; then
+        cp "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+        print_success "Installed ~/.zshrc"
+    else
+        print_error ".zshrc not found in repository"
+    fi
+    
+    # Install Alacritty config
+    if [ -f "$DOTFILES_DIR/alacritty.yml" ]; then
+        mkdir -p "$HOME/.config/alacritty"
+        cp "$DOTFILES_DIR/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+        print_success "Installed ~/.config/alacritty/alacritty.yml"
+    else
+        print_error "alacritty.yml not found in repository"
+    fi
+    
+    # Install Powerlevel10k config if it exists
+    if [ -f "$DOTFILES_DIR/.p10k.zsh" ]; then
+        cp "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
+        print_success "Installed ~/.p10k.zsh"
+    else
+        print_status ".p10k.zsh not found in repository (run 'p10k configure' to create)"
+    fi
+    
+    print_success "Dotfiles installed successfully!"
+    print_warning "Please restart your terminal or run: source ~/.zshrc"
+}
 
-  cp $DOTFILES_DIR/alacritty.yml ~/.config/alacritty/alacritty.yml
-  cp $DOTFILES_DIR/.zshrc ~/.zshrc
-
-  echo "Dotfiles saved successfully!"
+# Function to show status of dotfiles
+show_status() {
+    print_header "Dotfiles status comparison..."
+    
+    check_dotfiles_dir
+    
+    echo ""
+    print_status "Comparing repository files with system files:"
+    echo ""
+    
+    # Check .zshrc
+    if [ -f "$DOTFILES_DIR/.zshrc" ] && [ -f "$HOME/.zshrc" ]; then
+        if diff -q "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc" > /dev/null; then
+            echo "✅ .zshrc: Repository and system files are identical"
+        else
+            echo "⚠️  .zshrc: Repository and system files differ"
+        fi
+    elif [ -f "$DOTFILES_DIR/.zshrc" ]; then
+        echo "📁 .zshrc: Exists in repository, missing in system"
+    elif [ -f "$HOME/.zshrc" ]; then
+        echo "🏠 .zshrc: Exists in system, missing in repository"
+    else
+        echo "❌ .zshrc: Missing in both repository and system"
+    fi
+    
+    # Check Alacritty config
+    if [ -f "$DOTFILES_DIR/alacritty.yml" ] && [ -f "$HOME/.config/alacritty/alacritty.yml" ]; then
+        if diff -q "$DOTFILES_DIR/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml" > /dev/null; then
+            echo "✅ alacritty.yml: Repository and system files are identical"
+        else
+            echo "⚠️  alacritty.yml: Repository and system files differ"
+        fi
+    elif [ -f "$DOTFILES_DIR/alacritty.yml" ]; then
+        echo "📁 alacritty.yml: Exists in repository, missing in system"
+    elif [ -f "$HOME/.config/alacritty/alacritty.yml" ]; then
+        echo "🏠 alacritty.yml: Exists in system, missing in repository"
+    else
+        echo "❌ alacritty.yml: Missing in both repository and system"
+    fi
+    
+    # Check Powerlevel10k config
+    if [ -f "$DOTFILES_DIR/.p10k.zsh" ] && [ -f "$HOME/.p10k.zsh" ]; then
+        if diff -q "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh" > /dev/null; then
+            echo "✅ .p10k.zsh: Repository and system files are identical"
+        else
+            echo "⚠️  .p10k.zsh: Repository and system files differ"
+        fi
+    elif [ -f "$DOTFILES_DIR/.p10k.zsh" ]; then
+        echo "📁 .p10k.zsh: Exists in repository, missing in system"
+    elif [ -f "$HOME/.p10k.zsh" ]; then
+        echo "🏠 .p10k.zsh: Exists in system, missing in repository"
+    else
+        echo "ℹ️  .p10k.zsh: Not configured yet (run 'p10k configure')"
+    fi
+    
+    echo ""
+    print_status "Legend:"
+    echo "  ✅ Files are synchronized"
+    echo "  ⚠️  Files differ - consider running 'copy' or 'save'"
+    echo "  📁 File only in repository"
+    echo "  🏠 File only in system"
+    echo "  ❌ File missing everywhere"
+    echo "  ℹ️  File not yet configured"
 }
 
 # Main logic to determine the action based on the argument
-case "$1" in
-  "copy")
-    copy_dotfiles
-    ;;
-  "save")
-    save_dotfiles
-    ;;
-  *)
-    echo "Usage: $0 {copy|save}"
-    exit 1
-    ;;
+case "${1:-help}" in
+    "copy"|"sync")
+        copy_dotfiles
+        ;;
+    "save")
+        save_dotfiles
+        ;;
+    "status")
+        show_status
+        ;;
+    "help"|"-h"|"--help")
+        show_usage
+        ;;
+    *)
+        print_error "Unknown option: $1"
+        echo ""
+        show_usage
+        exit 1
+        ;;
 esac

@@ -1,109 +1,255 @@
+# ===============================================
+# 🚀 MODERN ZSH CONFIGURATION
+# ===============================================
+
 # If you come from bash you might have to change your $PATH.
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# ===============================================
+# 🎨 OH MY ZSH CONFIGURATION
+# ===============================================
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="af-magic"
+# Theme configuration - Using Powerlevel10k for modern look
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# ===============================================
+# 🔌 PLUGINS CONFIGURATION
+# ===============================================
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-completions
+    colored-man-pages
+    command-not-found
+    docker
+    docker-compose
+    kubectl
+    brew
+    macos
+    web-search
+    copypath
+    copyfile
+    dirhistory
+    history
+    jsontools
+    sudo
+    extract
+    z
+)
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
+# Load Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ===============================================
+# 🌈 ENVIRONMENT VARIABLES
+# ===============================================
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Language environment
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Preferred editor
+export EDITOR='code'
+export VISUAL='code'
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+# History configuration
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE=~/.zsh_history
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+# ===============================================
+# 🎯 MODERN ALIASES
+# ===============================================
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
+# Enhanced ls commands
+alias ls="lsd -al --color=auto"
+alias ll="lsd -l --color=auto"
+alias la="lsd -la --color=auto"
+alias lt="lsd --tree --color=auto"
+alias l="lsd --color=auto"
+
+# Git aliases
+alias g="git"
+alias ga="git add"
+alias gaa="git add ."
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gpl="git pull"
+alias gs="git status"
+alias gd="git diff"
+alias gb="git branch"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gl="git log --oneline --graph --decorate"
+alias gla="git log --oneline --graph --decorate --all"
+
+# Kubernetes aliases
+alias k="kubectl"
+alias kgp="kubectl get pods"
+alias kgs="kubectl get services"
+alias kgd="kubectl get deployments"
+alias kaf="kubectl apply -f"
+alias kdel="kubectl delete"
+alias kdes="kubectl describe"
+alias klogs="kubectl logs"
+
+# Docker aliases
+alias d="docker"
+alias dc="docker-compose"
+alias dps="docker ps"
+alias dpa="docker ps -a"
+alias di="docker images"
+alias drm="docker rm"
+alias drmi="docker rmi"
+alias dstop="docker stop"
+alias dstart="docker start"
+
+# System aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
+alias -- -="cd -"
+
+# Utility aliases
+alias reload="source ~/.zshrc"
 alias zshconfig="code ~/.zshrc"
 alias ohmyzsh="code ~/.oh-my-zsh"
-alias k="kubectl"
-alias ls="lsd -al --color=auto"
+alias hosts="sudo code /etc/hosts"
+alias ip="curl ipinfo.io/ip"
+alias localip="ipconfig getifaddr en0"
+alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 
-autoload -Uz compinitexport PATH="/usr/local/bin:$PATH"
+# File operations
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias mkdir="mkdir -pv"
+
+# Modern replacements
+alias cat="bat"
+alias find="fd"
+alias grep="rg"
+alias top="htop"
+alias du="dust"
+alias df="duf"
+
+# ===============================================
+# 🛠️ FUNCTIONS
+# ===============================================
+
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Extract any archive
+extract() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)     echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# Find and kill process by name
+killp() {
+    ps aux | grep $1 | grep -v grep | awk '{print $2}' | xargs kill -9
+}
+
+# Weather function
+weather() {
+    curl -s "wttr.in/$1?format=3"
+}
+
+# Note: Google search is available via the web-search plugin
+# Use: google "search term" or web_search google "search term"
+
+# ===============================================
+# 🎨 POWERLEVEL10K INSTANT PROMPT
+# ===============================================
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ===============================================
+# 🔧 ADDITIONAL CONFIGURATIONS
+# ===============================================
+
+# Auto-completion
+autoload -Uz compinit
+compinit
+
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Colored completion
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Menu selection
+zstyle ':completion:*' menu select
+
+# ===============================================
+# 📦 PACKAGE MANAGER INTEGRATIONS
+# ===============================================
+
+# Homebrew
+if command -v brew &> /dev/null; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Node Version Manager (if installed)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Python pyenv (if installed)
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+fi
+
+# ===============================================
+# 🎯 FINAL CONFIGURATIONS
+# ===============================================
+
+# Load Powerlevel10k configuration
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Load custom configurations if they exist
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Welcome message
+echo "🚀 Welcome to your modern terminal!"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
