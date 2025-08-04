@@ -68,8 +68,8 @@ keybind = super+alt+right=next_tab
 keybind = super+left=goto_split:previous
 keybind = super+right=goto_split:next
 # word navigation with option+arrow keys
-keybind = alt+left=text:\x1b\x5b\x31\x3b\x33\x44
-keybind = alt+right=text:\x1b\x5b\x31\x3b\x33\x43
+keybind = alt+left=text:\x1b[1;5D
+keybind = alt+right=text:\x1b[1;5C
 # cmd+s sends :w<enter> - so cmd-s works in vim in terminal
 keybind = super+s=text:\x1b:w\n
 keybind = global:cmd+`=toggle_quick_terminal
