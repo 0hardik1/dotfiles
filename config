@@ -1,5 +1,9 @@
 
 
+# Ghostty Terminal Emulator Configuration
+# https://ghostty.org/
+# This configuration file customizes the appearance and behavior of Ghostty terminal
+
 ### Visual configuration
 # theme = Tomorrow Night Bright
 # theme = tokyonight  # Commented out to allow custom colors
