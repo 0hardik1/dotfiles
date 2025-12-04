@@ -1,5 +1,5 @@
 # ===============================================
-# 🎨 MODERN ALACRITTY CONFIGURATION
+# MODERN ALACRITTY CONFIGURATION
 # ===============================================
 
 [general]
@@ -7,27 +7,26 @@ live_config_reload = true
 
 [terminal]
 [terminal.shell]
-program = "/opt/homebrew/bin/zsh"
+program = "/bin/zsh"
 
 # ===============================================
-# 🔤 FONT CONFIGURATION
+# FONT CONFIGURATION
 # ===============================================
 
 [font]
-normal = { family = "JetBrains Mono Nerd Font", style = "Regular" }
-bold = { family = "JetBrains Mono Nerd Font", style = "Bold" }
-italic = { family = "JetBrains Mono Nerd Font", style = "Italic" }
-bold_italic = { family = "JetBrains Mono Nerd Font", style = "Bold Italic" }
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
 size = 14.0
-offset = { x = 0, y = 1 }
-glyph_offset = { x = 0, y = 0 }
+    glyph_offset = { x = 0, y = 0 }
 
 # ===============================================
-# 🌈 TOKYO NIGHT COLOR SCHEME
+# TOKYO NIGHT COLOR SCHEME
 # ===============================================
 
 [colors.primary]
-background = '#1a1b26'
+background = '#0f1c30'
 foreground = '#c0caf5'
 
 [colors.normal]
@@ -50,7 +49,6 @@ magenta = '#bb9af7'
 cyan    = '#7dcfff'
 white   = '#c0caf5'
 
-[colors.indexed_colors]
 [[colors.indexed_colors]]
 index = 16
 color = '#ff9e64'
@@ -59,14 +57,22 @@ color = '#ff9e64'
 index = 17
 color = '#db4b4b'
 
+[colors.search.matches]
+foreground = '#1a1b26'
+background = '#e0af68'
+
+[colors.search.focused_match]
+foreground = '#1a1b26'
+background = '#f7768e'
+
 # ===============================================
-# 🪟 WINDOW CONFIGURATION
+# WINDOW CONFIGURATION
 # ===============================================
 
 [window]
 opacity = 0.95
 blur = true
-decorations = "buttonless"
+decorations = "Buttonless"
 startup_mode = "Windowed"
 dynamic_title = true
 dynamic_padding = false
@@ -80,7 +86,7 @@ x = 10
 y = 10
 
 # ===============================================
-# 📜 SCROLLING CONFIGURATION
+# SCROLLING CONFIGURATION
 # ===============================================
 
 [scrolling]
@@ -88,7 +94,7 @@ history = 10000
 multiplier = 3
 
 # ===============================================
-# 🖱️ MOUSE CONFIGURATION
+# MOUSE CONFIGURATION
 # ===============================================
 
 [mouse]
@@ -99,7 +105,7 @@ mouse = "Middle"
 action = "PasteSelection"
 
 # ===============================================
-# ⌨️ KEYBOARD BINDINGS
+# KEYBOARD BINDINGS
 # ===============================================
 
 [keyboard]
@@ -134,21 +140,9 @@ bindings = [
   { key = "K", mods = "Command", chars = "\u000c" },
 ]
 
-# ===============================================
-# 🔍 SEARCH CONFIGURATION
-# ===============================================
-
-[search]
-[search.matches]
-foreground = '#1a1b26'
-background = '#e0af68'
-
-[search.focused_match]
-foreground = '#1a1b26'
-background = '#f7768e'
 
 # ===============================================
-# 🎯 CURSOR CONFIGURATION
+# CURSOR CONFIGURATION
 # ===============================================
 
 [cursor]
@@ -157,7 +151,7 @@ blink_interval = 750
 unfocused_hollow = true
 
 # ===============================================
-# 🔔 BELL CONFIGURATION
+# BELL CONFIGURATION
 # ===============================================
 
 [bell]

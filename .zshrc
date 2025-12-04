@@ -1,5 +1,5 @@
 # ===============================================
-# 🚀 MODERN ZSH CONFIGURATION
+# MODERN ZSH CONFIGURATION
 # ===============================================
 
 # If you come from bash you might have to change your $PATH.
@@ -8,7 +8,7 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # ===============================================
-# 🎨 OH MY ZSH CONFIGURATION
+# OH MY ZSH CONFIGURATION
 # ===============================================
 
 # Path to your Oh My Zsh installation.
@@ -18,7 +18,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # ===============================================
-# 🔌 PLUGINS CONFIGURATION
+# PLUGINS CONFIGURATION
 # ===============================================
 
 plugins=(
@@ -48,7 +48,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # ===============================================
-# 🌈 ENVIRONMENT VARIABLES
+# ENVIRONMENT VARIABLES
 # ===============================================
 
 # Language environment
@@ -73,7 +73,7 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 
 # ===============================================
-# 🎯 MODERN ALIASES
+# MODERN ALIASES
 # ===============================================
 
 # Enhanced ls commands
@@ -151,7 +151,7 @@ alias du="dust"
 alias df="duf"
 
 # ===============================================
-# 🛠️ FUNCTIONS
+# FUNCTIONS
 # ===============================================
 
 # Create directory and cd into it
@@ -195,7 +195,7 @@ weather() {
 # Use: google "search term" or web_search google "search term"
 
 # ===============================================
-# 🎨 POWERLEVEL10K INSTANT PROMPT
+# POWERLEVEL10K INSTANT PROMPT
 # ===============================================
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -204,7 +204,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # ===============================================
-# 🔧 ADDITIONAL CONFIGURATIONS
+# ADDITIONAL CONFIGURATIONS
 # ===============================================
 
 # Auto-completion
@@ -221,7 +221,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 
 # ===============================================
-# 📦 PACKAGE MANAGER INTEGRATIONS
+# PACKAGE MANAGER INTEGRATIONS
 # ===============================================
 
 # Homebrew
@@ -240,7 +240,7 @@ if command -v pyenv &> /dev/null; then
 fi
 
 # ===============================================
-# 🎯 FINAL CONFIGURATIONS
+# FINAL CONFIGURATIONS
 # ===============================================
 
 # Load Powerlevel10k configuration
@@ -250,6 +250,6 @@ fi
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # Welcome message
-echo "🚀 Welcome to your modern terminal!"
+echo "Welcome to your modern terminal!"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
