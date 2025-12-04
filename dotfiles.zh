@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ===============================================
-# 🗂️ DOTFILES MANAGEMENT SCRIPT
+# DOTFILES MANAGEMENT SCRIPT
 # ===============================================
 
 # Script version
@@ -41,7 +41,7 @@ print_header() {
 
 # Function to show usage
 show_usage() {
-    echo "🗂️ Dotfiles Management Script v$VERSION"
+    echo "Dotfiles Management Script v$VERSION"
     echo ""
     echo "Usage: $0 [OPTION]"
     echo ""
@@ -166,56 +166,56 @@ show_status() {
     # Check .zshrc
     if [ -f "$DOTFILES_DIR/.zshrc" ] && [ -f "$HOME/.zshrc" ]; then
         if diff -q "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc" > /dev/null; then
-            echo "✅ .zshrc: Repository and system files are identical"
+            echo "[OK] .zshrc: Repository and system files are identical"
         else
-            echo "⚠️  .zshrc: Repository and system files differ"
+            echo "[DIFF] .zshrc: Repository and system files differ"
         fi
     elif [ -f "$DOTFILES_DIR/.zshrc" ]; then
-        echo "📁 .zshrc: Exists in repository, missing in system"
+        echo "[REPO] .zshrc: Exists in repository, missing in system"
     elif [ -f "$HOME/.zshrc" ]; then
-        echo "🏠 .zshrc: Exists in system, missing in repository"
+        echo "[SYS] .zshrc: Exists in system, missing in repository"
     else
-        echo "❌ .zshrc: Missing in both repository and system"
+        echo "[MISSING] .zshrc: Missing in both repository and system"
     fi
     
     # Check Alacritty config
     if [ -f "$DOTFILES_DIR/alacritty.yml" ] && [ -f "$HOME/.config/alacritty/alacritty.yml" ]; then
         if diff -q "$DOTFILES_DIR/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml" > /dev/null; then
-            echo "✅ alacritty.yml: Repository and system files are identical"
+            echo "[OK] alacritty.yml: Repository and system files are identical"
         else
-            echo "⚠️  alacritty.yml: Repository and system files differ"
+            echo "[DIFF] alacritty.yml: Repository and system files differ"
         fi
     elif [ -f "$DOTFILES_DIR/alacritty.yml" ]; then
-        echo "📁 alacritty.yml: Exists in repository, missing in system"
+        echo "[REPO] alacritty.yml: Exists in repository, missing in system"
     elif [ -f "$HOME/.config/alacritty/alacritty.yml" ]; then
-        echo "🏠 alacritty.yml: Exists in system, missing in repository"
+        echo "[SYS] alacritty.yml: Exists in system, missing in repository"
     else
-        echo "❌ alacritty.yml: Missing in both repository and system"
+        echo "[MISSING] alacritty.yml: Missing in both repository and system"
     fi
     
     # Check Powerlevel10k config
     if [ -f "$DOTFILES_DIR/.p10k.zsh" ] && [ -f "$HOME/.p10k.zsh" ]; then
         if diff -q "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh" > /dev/null; then
-            echo "✅ .p10k.zsh: Repository and system files are identical"
+            echo "[OK] .p10k.zsh: Repository and system files are identical"
         else
-            echo "⚠️  .p10k.zsh: Repository and system files differ"
+            echo "[DIFF] .p10k.zsh: Repository and system files differ"
         fi
     elif [ -f "$DOTFILES_DIR/.p10k.zsh" ]; then
-        echo "📁 .p10k.zsh: Exists in repository, missing in system"
+        echo "[REPO] .p10k.zsh: Exists in repository, missing in system"
     elif [ -f "$HOME/.p10k.zsh" ]; then
-        echo "🏠 .p10k.zsh: Exists in system, missing in repository"
+        echo "[SYS] .p10k.zsh: Exists in system, missing in repository"
     else
-        echo "ℹ️  .p10k.zsh: Not configured yet (run 'p10k configure')"
+        echo "[INFO] .p10k.zsh: Not configured yet (run 'p10k configure')"
     fi
     
     echo ""
     print_status "Legend:"
-    echo "  ✅ Files are synchronized"
-    echo "  ⚠️  Files differ - consider running 'copy' or 'save'"
-    echo "  📁 File only in repository"
-    echo "  🏠 File only in system"
-    echo "  ❌ File missing everywhere"
-    echo "  ℹ️  File not yet configured"
+    echo "  [OK] Files are synchronized"
+    echo "  [DIFF] Files differ - consider running 'copy' or 'save'"
+    echo "  [REPO] File only in repository"
+    echo "  [SYS] File only in system"
+    echo "  [MISSING] File missing everywhere"
+    echo "  [INFO] File not yet configured"
 }
 
 # Main logic to determine the action based on the argument
