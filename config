@@ -40,7 +40,7 @@ mouse-hide-while-typing = true
 
 # Enhanced visual settings
 font-size = 14
-font-family = "JetBrains Mono"
+font-family = "JetBrainsMono Nerd Font"
 cursor-style = block
 cursor-style-blink = true
 window-padding-x = 10
@@ -95,7 +95,7 @@ resize-overlay-position = center
 mouse-scroll-multiplier = 3
 clipboard-read = allow
 clipboard-write = allow
-clipboard-paste-protection = false
+clipboard-paste-protection = true
 
 # window-colorspace = srgb
 window-colorspace = display-p3

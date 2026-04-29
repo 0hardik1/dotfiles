@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Local-only zsh overrides
+.zshrc.local
+
+# Backup directories created by setup.sh
+.dotfiles_backup_*
+.dotfiles_manual_backup_*

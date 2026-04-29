@@ -97,26 +97,30 @@ The setup script includes comprehensive backup and restore functionality to keep
 
 ## 🗂️ Dotfiles Management
 
-The enhanced `dotfiles.zh` script provides comprehensive dotfiles management with backup integration.
+The `dotfiles.sh` script provides dotfiles management with backup integration.
 
 ### Management Commands
 
 ```bash
-./dotfiles.zh copy     # Copy current system configs to repository
-./dotfiles.zh save     # Install repository configs to system (with backup)
-./dotfiles.zh sync     # Sync repository with current system configs
-./dotfiles.zh status   # Show status comparison between repo and system
-./dotfiles.zh help     # Show help message
+./dotfiles.sh copy     # Copy current system configs to repository
+./dotfiles.sh save     # Install repository configs to system (with backup)
+./dotfiles.sh sync     # Sync repository with current system configs
+./dotfiles.sh status   # Show status comparison between repo and system
+./dotfiles.sh help     # Show help message
 ```
+
+### Tracked Files
+
+Both `setup.sh` and `dotfiles.sh` share a `DOTFILES` array at the top of each
+file. Add or remove entries there to manage additional dotfiles.
 
 ### Status Indicators
 
-- ✅ **Synchronized**: Repository and system files are identical
-- ⚠️ **Different**: Files differ between repository and system
-- 📁 **Repository Only**: File exists only in repository
-- 🏠 **System Only**: File exists only in system
-- ❌ **Missing**: File missing in both locations
-- ℹ️ **Not Configured**: File not yet set up (e.g., Powerlevel10k config)
+- `[OK]` Repository and system files are identical
+- `[DIFF]` Files differ — run `copy` or `save` to reconcile
+- `[REPO]` File exists only in repository
+- `[SYS]` File exists only in system
+- `[MISSING]` File missing in both locations
 
 ### Integration with Backup System
 
@@ -129,11 +133,12 @@ The dotfiles management script automatically integrates with the setup script's 
 
 ```
 dotfiles/
-├── .zshrc           # Enhanced Zsh configuration
-├── alacritty.yml    # Modern Alacritty terminal config
+├── .zshrc           # Zsh configuration
+├── alacritty.toml   # Alacritty terminal config
+├── config           # Ghostty terminal config (installed to ~/.config/ghostty/config)
 ├── setup.sh         # Automated setup script with backup/restore
-├── dotfiles.zh      # Enhanced dotfiles management script
-└── README.md        # This comprehensive guide
+├── dotfiles.sh      # Dotfiles management script
+└── README.md        # This guide
 ```
 
 ## 🎯 Key Aliases
@@ -176,12 +181,15 @@ di      # docker images
 ```
 
 ### Modern Tools
+Modern replacements are exposed under new aliases so the standard commands
+stay available for scripts and pipelines:
 ```bash
-ls      # lsd -al --color=auto
-cat     # bat (syntax highlighted)
-find    # fd (faster find)
-grep    # ripgrep (faster grep)
-top     # htop (interactive)
+l, ll, la, lt   # lsd variants
+b               # bat (syntax-highlighted cat)
+f               # fd (friendlier find)
+rg              # ripgrep (faster grep)
+dust, duf       # dust/duf (du/df replacements)
+htop            # interactive process viewer
 ```
 
 ## 🛠️ Useful Functions
@@ -207,26 +215,28 @@ weather "new york"
 ```
 
 ### `google <query>`
-Quick web search:
+Quick web search (provided by the OMZ `web-search` plugin):
 ```bash
 google "zsh tips"
 ```
 
 ### `killp <process-name>`
-Find and kill processes by name:
+Find and terminate processes by name. Sends SIGTERM by default; pass `-9` for
+SIGKILL:
 ```bash
 killp chrome
+killp -9 chrome
 ```
 
 ## 🎨 Customization
 
 ### Color Scheme
-The configuration uses the Tokyo Night color scheme. To change it, modify the `[colors]` section in `alacritty.yml`.
+The configuration uses the Tokyo Night color scheme. To change it, modify the `[colors]` section in `alacritty.toml`.
 
 ### Font
 Currently using JetBrains Mono Nerd Font. To change:
 1. Install your preferred Nerd Font
-2. Update the `[font]` section in `alacritty.yml`
+2. Update the `[font]` section in `alacritty.toml`
 
 ### Theme
 Using Powerlevel10k theme. Reconfigure anytime with:
@@ -284,7 +294,9 @@ If you prefer manual installation:
 5. **Copy configuration files**:
    ```bash
    cp .zshrc ~/.zshrc
-   cp alacritty.yml ~/.config/alacritty/alacritty.yml
+   mkdir -p ~/.config/alacritty ~/.config/ghostty
+   cp alacritty.toml ~/.config/alacritty/alacritty.toml
+   cp config ~/.config/ghostty/config
    ```
 
 ## 🎮 Keyboard Shortcuts
