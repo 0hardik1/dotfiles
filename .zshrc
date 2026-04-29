@@ -98,7 +98,8 @@ setopt HIST_IGNORE_SPACE
 # ALIASES
 # ===============================================
 
-# Modern ls (lsd) — keep `ls` itself untouched, add explicit aliases.
+# Modern ls (lsd) with Nerd Font icons.
+alias ls="lsd"
 alias ll="lsd -l"
 alias la="lsd -la"
 alias lt="lsd --tree"
