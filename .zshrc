@@ -83,9 +83,19 @@ export LC_ALL=en_US.UTF-8
 export EDITOR='code --wait'
 export VISUAL='code --wait'
 
+# Pager: skip paging for short output, preserve colors, keep output in
+# scrollback, case-insensitive search (-i)
+export PAGER="less -FRXi"
+export LESS="-FRXi"
+
+# Syntax-highlighted man pages via bat
+if command -v bat &> /dev/null; then
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
 # History
-export HISTSIZE=10000
-export SAVEHIST=10000
+export HISTSIZE=1000000
+export SAVEHIST=1000000
 export HISTFILE=~/.zsh_history
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
@@ -195,6 +205,33 @@ killp() {
 weather() {
     curl -s "wttr.in/$1?format=3"
 }
+
+# ===============================================
+# WORKFLOW HELPERS
+# ===============================================
+
+# omz kubectl/git plugins pre-define some of these names as aliases;
+# zsh can't define a function over an alias, so clear them first.
+unalias kge gmain 2>/dev/null
+
+# Events in a namespace, optionally filtered: kge <namespace> [pattern]
+kge() {
+    if [[ -n "$2" ]]; then
+        kubectl get events -n "$1" | grep -i "$2"
+    else
+        kubectl get events -n "$1"
+    fi
+}
+
+# Checkout main and pull it
+gmain() {
+    git checkout main && git pull origin main
+}
+
+alias wk="watch -n 1 kubectl"
+alias bup="brew update && brew upgrade"
+alias gtrigger='git commit --allow-empty -m "Trigger pipeline" && git push'
+alias gti="git"  # typo guard
 
 # ===============================================
 # COMPLETION

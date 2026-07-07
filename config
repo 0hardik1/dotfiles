@@ -5,6 +5,8 @@
 # theme = tokyonight  # Commented out to allow custom colors
 window-theme = system
 macos-titlebar-style = tabs
+macos-option-as-alt = left
+
 
 # Custom deep blue color scheme
 background = #000011
@@ -45,8 +47,12 @@ cursor-style = block
 cursor-style-blink = true
 window-padding-x = 10
 window-padding-y = 10
-background-opacity = 0.95
+# Opaque background for maximum text contrast (was 0.95)
+background-opacity = 1.0
 unfocused-split-opacity = 0.7
+
+# Extra line spacing for long reading sessions
+adjust-cell-height = 10%
 
 # scrollback-limit in bytes, roughly 125,000 lines
 scrollback-limit = 10000000
@@ -95,7 +101,34 @@ resize-overlay-position = center
 mouse-scroll-multiplier = 3
 clipboard-read = allow
 clipboard-write = allow
-clipboard-paste-protection = true
+clipboard-paste-protection = false
 
 # window-colorspace = srgb
 window-colorspace = display-p3
+
+
+window-step-resize = true
+window-padding-balance = true
+
+
+# Readability — guarantees text is legible no matter the bg/fg combo
+minimum-contrast = 1.1
+
+# Use the bright palette for bold text (most themes assume this)
+bold-is-bright = true
+
+# Shift+click bypasses mouse mode so you can always select text in tmux/vim
+mouse-shift-capture = false
+
+# Quick terminal placement (you bind it but never configure it)
+quick-terminal-position = top
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = 0.1
+
+# New tabs/splits inherit cwd and font size (usually defaults, but explicit)
+window-inherit-working-directory = true
+window-inherit-font-size = true
+
+
+# Trim trailing whitespace on paste
+clipboard-trim-trailing-spaces = true

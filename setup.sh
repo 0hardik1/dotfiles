@@ -27,6 +27,7 @@ DOTFILES=(
     ".zshrc:$HOME/.zshrc"
     "alacritty.toml:$HOME/.config/alacritty/alacritty.toml"
     "config:$HOME/.config/ghostty/config"
+    "bat.config:$HOME/.config/bat/config"
     ".p10k.zsh:$HOME/.p10k.zsh"
 )
 
